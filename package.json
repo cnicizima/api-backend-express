@@ -1,0 +1,20 @@
+{
+  "name": "api-backend",
+  "version": "1.0.0",
+  "description": "API backend exemplo de aula",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start":"node src/server.js",
+    "dev":"node --watch src/server.js" 
+  },
+  "keywords": [
+    "api",
+    "express"
+  ],
+  "author": "Ciro Nicizima",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

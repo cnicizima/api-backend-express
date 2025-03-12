@@ -5,6 +5,7 @@ import createUserController from '../controller/user/createUserController.js'
 import updateUserController from '../controller/user/updateUserController.js'
 import editNameUSerController from '../controller/user/editNameUserController.js'
 import deleteUserController from '../controller/user/deleteUserController.js'
+import listUserController from '../controller/user/listUserController.js'
 
 const router = express.Router();
 
@@ -12,11 +13,14 @@ const router = express.Router();
 // o primeiro contato da api é sempre no server.js, que redireciona para o router
 // e como é router, não é app.get e sim router.get
 
-router.get('/', getUserController);
-router.put('/', updateUserController);
+
+router.get('/list', listUserController);
+router.get('/:id', getUserController);
 router.post('/', createUserController);  
-router.patch('/', editNameUSerController);
-router.delete('/', deleteUserController);
+router.put('/:id', updateUserController);
+router.delete('/:id', deleteUserController);
+router.patch('/nome/:id', editNameUSerController);
+// http://localhost:3000/user/nome/1 - para trocar nome user
 
 
 

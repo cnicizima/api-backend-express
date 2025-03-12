@@ -9,6 +9,11 @@ import productRouter from './routers/productRouter.js';
 // cria o objeto app que tem todas as funçoes do express
 const app = express();
 
+//middlaware para o express entender json. Middlaware nativo do express.
+app.use(express.json()) //gravar objeto no req.body
+
+
+
 //cria uma rota get no endereço http://localhots:3000/
 app.get('/', (req, res) => {
   return res.json({ 

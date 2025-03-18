@@ -5,12 +5,15 @@
 import express from 'express'; 
 import userRouter from './routers/userRouter.js';
 import productRouter from './routers/productRouter.js';
-
+import cors from 'cors';
 // cria o objeto app que tem todas as funçoes do express
 const app = express();
 
+//middleware para liberar o cors policy. dessa forma 
+app.use(cors ())
 //middlaware para o express entender json. Middlaware nativo do express.
 app.use(express.json()) //gravar objeto no req.body
+
 
 
 

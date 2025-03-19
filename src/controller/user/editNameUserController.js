@@ -4,7 +4,7 @@ import { updateName } from "../../models/userModel.js"
 export default async function (req, res) {
   const { id } = req.params
   const { name } = req.body
-
+// neste caso, tanto id quanto name sao propriedades dos objetos, por isso precisa de {}  par a desestruturaçao
   const result = await updateName(+id, name)
 
   if (!result) {

@@ -1,5 +1,20 @@
-export default function deleteProductController (req, res) {
+import { remove } from "../../models/productModel.js"
+
+export default async function deleteProductController (req, res){
+
+    const { id } = req.params
+    
+    const result = await remove(+id)
+
+    if(!result){
+      return res.status(404).json({
+        error: "Produto não encontrado"
+      })
+    }
+
     return res.json({
-        message: 'Resposta do router DELETE /product/'
+      message: "Produto removido com sucesso",
+      product: result
     })
-}
+
+  }

@@ -14,11 +14,19 @@ datasource db {
 }
 
 model user {
-  id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(255)
-  email   String  @db.VarChar(255) @unique
-  pass    String  @db.VarChar(255)
-  avatar  String? @db.Text 
+  id     Int     @id @default(autoincrement())
+  name   String  @db.VarChar(255)
+  email  String  @unique @db.VarChar(255)
+  pass   String  @db.VarChar(255)
+  avatar String? @db.Text
+}
+
+model product {
+  id     Int     @id @default(autoincrement())
+  name   String  @db.VarChar(255)
+  preco  Decimal @db.Decimal(10, 2)
+  tipo   String  @db.VarChar(255)
+  imagem String  @db.VarChar(255)
 }
 
 // db.Text nao tem limite de caracteres

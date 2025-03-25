@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/', createProductController); 
 router.delete('/:id', deleteProductController);
-router.get('/', listProductController)
+router.get('/list', listProductController)
 router.get('/:id', getProductController)
 router.put('/:id', updateProductController)
 

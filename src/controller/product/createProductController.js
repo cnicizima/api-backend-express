@@ -14,6 +14,6 @@ export default async function createProductController(req, res) {
 
     return res.json({ 
       message: 'Produto criado com sucesso',
-      user: result    
+      product: result    
     })
   }

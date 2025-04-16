@@ -1,10 +1,59 @@
 import { PrismaClient } from "@prisma/client";
+import { z } from 'zod';
 
 const prisma = new PrismaClient();
 
+const userSchema = z.object({
+    id: z.number({
+        invalid_type_error: "O id deve ser um número",
+        required_error: "O id é obrigatório"
+    }),
+
+    name: z.string({
+        invalid_type_error: "O nome deve ser uma string",
+        required_error: "O nome é obrigatório"
+    })
+        .min(3, { message: "O nome deve ter ao menos 3 letras" })
+        .max(255, { message: "O nome deve ter no máximo 255 letras" }),
+
+    email: z.string({
+        invalid_type_error: "O email deve ser um email válido - string",
+        required_error: "O email é obrigatório"
+    })
+        .email({ message: "Email inválido" }),
+
+    pass: z.string({
+        invalid_type_error: "A senha deve ser uma string",
+        required_error: "A senha é obrigatória"
+    })
+        .min(8, { message: "A senha deve ter no mínimo 8 caracteres" })
+        .max(255, { message: "O nome deve ter no máximo 255 caracteres" }),
+
+    avatar: z.string({
+        invalid_type_error: "O avatar deve ser uma string",
+        required_error: "O avatar é obrigatório"
+    })
+        .url({ message: "Url do avatar inválida" })
+        .optional()
+})
+
+//se a pessoa não passar nada, partial é null. 
+export const userValidator = (user, partial = null) => {
+    if (partial) {
+        return userSchema.partial(partial).safeParse(user)
+    }
+    return userSchema.safeParse(user)
+}
+
 export async function create(user) {
     const result = await prisma.user.create({
-        data: user
+        data: user,
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true
+        }
     })
     return result
 }

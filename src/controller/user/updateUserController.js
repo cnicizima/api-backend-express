@@ -1,11 +1,22 @@
-import { update } from "../../models/userModel.js"
+import { update, userValidator } from "../../models/userModel.js"
 
 export default async function (req, res) {
   const { id } = req.params // id está entre chaves pois estamos desestruturando o objeto params. Só queremos o id. 
   const user = req.body // já user, quero toda a data, por isso nao tem { }
+  user.id = +id
 
-  const result = await update (+id, user)
-  // o '+' converte a informação para um Number (garante que seja um numero)
+
+  const { success, error, data } = userValidator(user) 
+
+  if(!success) {
+    return res.status(400).json({
+      message: "Erro ao editar usuário", 
+      errors: error.flatten().fieldErrors
+    })
+  }
+
+
+  const result = await update (data.id, user)
 
   
   if(!result){

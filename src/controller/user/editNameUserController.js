@@ -1,11 +1,27 @@
-import { updateName } from "../../models/userModel.js"
+import { updateName, userValidator } from "../../models/userModel.js"
 
 
 export default async function (req, res) {
+
   const { id } = req.params
   const { name } = req.body
 // neste caso, tanto id quanto name sao propriedades dos objetos, por isso precisa de {}  par a desestruturaçao
-  const result = await updateName(+id, name)
+
+const user = {
+  id: +id,
+  name: name
+}
+
+const { success, error, data } = userValidator(user, {email: true, pass: true})
+
+if(!success){
+  return res.status(400).json({
+    message: "Erro ao edutar nome do usuário",
+    errors: error.flatten().fieldErrors
+  })
+}
+
+const result = await updateName(data.id, data.name)
 
   if (!result) {
     return res.status(404).json({

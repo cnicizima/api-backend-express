@@ -6,7 +6,7 @@ export default async function (req, res) {
   user.id = +id
 
 
-  const { success, error, data } = userValidator(user) 
+  const { success, error, data } = userValidator(user, pass = true) 
 
   if(!success) {
     return res.status(400).json({

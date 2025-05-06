@@ -5,6 +5,7 @@
 import express from 'express'; 
 import userRouter from './routers/userRouter.js';
 import productRouter from './routers/productRouter.js';
+import authRouter from './routers/authRouter.js';
 import cors from 'cors';
 import { logger } from './middlewares/logger.js';
 import { loggerBody } from './middlewares/loggerBody.js';
@@ -28,6 +29,7 @@ app.use(cors ())
 app.use(express.json()) //gravar objeto no req.body
 
 app.use(loggerBody) 
+//manda no terminal o body do envio como um log - nao é necessario. 
 
 //ele tenta entrar no '/' e se não encontrar, ele vai para o próximo middleware
 //cria uma rota get no endereço http://localhots:3000/
@@ -39,6 +41,7 @@ app.get('/', welcomeController)// //middleware que vai tratar a rota /, ou seja,
 // app.use é um middleware que recebe um caminho e um router
 // quero que todo caminho /user, use o roteador userRouter
 // ou seja, se o caminho for /user, vai chamar o userRouter
+app.use('/auth', authRouter);
 app.use('/user', userRouter);
 // app.use('/user', logger, userRouter);  posso usar o middleware aqui também, ou seja, ele roda o logger antes de entrar no controller
 

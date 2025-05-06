@@ -1,5 +1,5 @@
 import { create, userValidator } from "../../models/userModel.js"
-
+import bcrypt from "bcrypt"
 // importa a função create que criei no userModel
 
 export default async function (req, res, next) {
@@ -17,6 +17,9 @@ export default async function (req, res, next) {
       })
     }
 
+    data.pass = bcrypt.hashSync(data.pass, 10)
+    //encripta só a senha para guardar no banco com o create.
+
     const result = await create(data) //funcao criada no userModel
 
     if (!result) {
@@ -27,8 +30,7 @@ export default async function (req, res, next) {
 
 
     return res.status(201).json({
-      message: 'Usuário criado com sucesso',
-      user: result
+      message: 'Usuário criado com sucesso'
     })
   } catch (error) {
     if (error?.code === "P2002" && error?.meta?.target === "user_email_key") {

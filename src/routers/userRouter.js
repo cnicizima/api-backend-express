@@ -1,7 +1,6 @@
 // tem que importar o express para usar o router, que é uma função do express
 import express from 'express'
 import getUserController from '../controller/user/getUserController.js'
-import createUserController from '../controller/user/createUserController.js'
 import updateUserController from '../controller/user/updateUserController.js'
 import editNameUSerController from '../controller/user/editNameUserController.js'
 import deleteUserController from '../controller/user/deleteUserController.js'
@@ -16,7 +15,6 @@ const router = express.Router();
 
 router.get('/list', listUserController);
 router.get('/:id', getUserController);
-router.post('/', createUserController);  
 router.put('/:id', updateUserController);
 router.delete('/:id', deleteUserController);
 router.patch('/nome/:id', editNameUSerController);

@@ -10,6 +10,7 @@ export default async function (req, res, next) {
     //valida o usuario recebido no body da req, usando a funçao do model
     //quando passo o segundo parametro como { id: true }, ele valida o id como opcional, se não passar nada, ele valida o id como obrigatório
     //se por um patch só de avatar, teria que passar tudo como true.
+    //tudo que validou vai para o data
     if (!success) {
       return res.status(400).json({
         message: "Erro ao validar os dados do usuário",
@@ -30,7 +31,8 @@ export default async function (req, res, next) {
 
 
     return res.status(201).json({
-      message: 'Usuário criado com sucesso'
+      message: 'Usuário criado com sucesso',
+      user: result
     })
   } catch (error) {
     if (error?.code === "P2002" && error?.meta?.target === "user_email_key") {
@@ -41,6 +43,7 @@ export default async function (req, res, next) {
         }
       })
     }
+    
     next(error)
   }
 }

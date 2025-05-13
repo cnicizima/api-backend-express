@@ -1,6 +1,7 @@
 import { userValidator, getByEmail } from "../../models/userModel.js"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
+import { create } from "../../models/sessionModel.js"
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 
 export default async function (req, res, next) {
@@ -34,11 +35,21 @@ export default async function (req, res, next) {
       })
     }
 
+    // dados para guardar no token (payload)
+    const payload = {
+      id: result.id,
+    }
+    const sessionResult = await create(result.id, req.headers['user-agent'])
+
     // neste ponto, email é valido e senha é valido. depois buscou no banco e achou o email no banco e trouxe os dados, depois comparou a hash com os dados. Neste ponto, ele está autenticado. 
 
-    const accessToken = jwt.sign({ id: result.id, email: result.email, avatar: result.avatar }, process.env.JWT_SECRET, { expiresIn: '15min' })
+    // const accessToken = jwt.sign({ id: result.id, email: result.email, avatar: result.avatar }, process.env.JWT_SECRET, { expiresIn: '15min' })
 
-    const refreshToken = jwt.sign({ id: result.id, email: result.email, avatar: result.avatar }, process.env.JWT_SECRET, { expiresIn: '3d' })
+    // const refreshToken = jwt.sign({...payload, sessionId: sessionResult.id}, process.env.JWT_SECRET, { expiresIn: '3d' })
+
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' })
+
+    const refreshToken = jwt.sign({ ...payload, sessionId: sessionResult.id }, process.env.JWT_SECRET, { expiresIn: '3d' })
 
     res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
 

@@ -14,11 +14,12 @@ datasource db {
 }
 
 model user {
-  id     Int     @id @default(autoincrement())
-  name   String  @db.VarChar(255)
-  email  String  @unique @db.VarChar(255)
-  pass   String  @db.VarChar(255)
-  avatar String? @db.Text
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
+  email   String    @unique @db.VarChar(255)
+  pass    String    @db.VarChar(255)
+  avatar  String?   @db.Text
+  session session[]
 }
 
 model product {
@@ -27,6 +28,15 @@ model product {
   preco  Decimal @db.Decimal(10, 2)
   tipo   String  @db.VarChar(255)
   imagem String  @db.VarChar(255)
+}
+
+model session {
+  id         Int      @id @default(autoincrement())
+  user_id    Int      
+  client     String   @db.VarChar(255)
+  created_at DateTime @default(now())
+
+  user user @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 // db.Text nao tem limite de caracteres

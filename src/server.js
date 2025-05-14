@@ -12,7 +12,7 @@ import { loggerBody } from './middlewares/loggerBody.js';
 import { errorsHandler } from './middlewares/errorsHandler.js';
 import welcomeController from './controller/welcomeController.js';
 import notFoundController from './controller/notFoundController.js';
-
+import cookieParser from 'cookie-parser';
 // o express roda este server na ordem dos middlewares que aparecem. 
 
 // cria o objeto app que tem todas as funçoes do express
@@ -27,6 +27,8 @@ app.use(cors ())
 
 //middlaware para o express entender json. Middlaware nativo do express.
 app.use(express.json()) //gravar objeto no req.body
+
+app.use(cookieParser())// //middleware para o express entender cookies. 
 
 app.use(loggerBody) 
 //manda no terminal o body do envio como um log - nao é necessario. 

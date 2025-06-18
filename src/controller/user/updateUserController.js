@@ -7,6 +7,13 @@ export default async function (req, res, next) {
     const user = req.body // já user, quero toda a data, por isso nao tem { }
     user.id = +id
 
+    // O userLogged é gerado no middleware auth.js 
+    if(user.id !== req.userLogged.id) {
+      return res.status(403).json({
+        message: "Você não tem permissão para editar este usuário"
+      })
+    }
+
 
     const { success, error, data } = userValidator(user, pass = true)
 

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const auth = (req, res, next) => {
-    const actionToken = req.headers["authorization"]?.split(' ')[1];
+    const accessToken = req.headers["authorization"]?.split(' ')[1];
 
     if(!actionToken) {
         return res.status(401).json({ message: "Token de autenticação não fornecido" });

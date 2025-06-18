@@ -1,5 +1,5 @@
 import { remove } from "../../models/sessionModel.js";
-import jwt from "jasonwebtoken"; 
+import jwt from "jsonwebtoken"; 
 
 const logoutController = async (req, res, next) => {
     try {

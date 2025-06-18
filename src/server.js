@@ -10,6 +10,7 @@ import cors from 'cors';
 import { logger } from './middlewares/logger.js';
 import { loggerBody } from './middlewares/loggerBody.js';
 import { errorsHandler } from './middlewares/errorsHandler.js';
+import { auth } from './middlewares/auth.js'; 
 import welcomeController from './controller/welcomeController.js';
 import notFoundController from './controller/notFoundController.js';
 import cookieParser from 'cookie-parser';
@@ -44,7 +45,7 @@ app.get('/', welcomeController)// //middleware que vai tratar a rota /, ou seja,
 // quero que todo caminho /user, use o roteador userRouter
 // ou seja, se o caminho for /user, vai chamar o userRouter
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
+app.use('/user', auth, userRouter);
 // app.use('/user', logger, userRouter);  posso usar o middleware aqui também, ou seja, ele roda o logger antes de entrar no controller
 
 app.use('/product', productRouter);
